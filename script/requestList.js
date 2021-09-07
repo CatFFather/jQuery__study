@@ -41,7 +41,7 @@ function getRequestList(event, status, page, page_size) {
                 <div class="request__card__row1">
                     <div class="request__card__row1__items">
                         <div class="row1__car-number">${request.car_number}</div>
-                        <div>연결중</div>
+                        <div class="status status__request">연결중</div>
                     </div>
                     <div class="request__card__row1__items">
                         <div class="row1__request-number">#${request.id}</div>

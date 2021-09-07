@@ -41,7 +41,7 @@ function getRequestList(event, status, page, page_size) {
                 <div class="request__card__row1">
                     <div class="request__card__row1__items">
                         <div class="row1__car-number">${request.car_number}</div>
-                        <div>취소</div>
+                        <div class="status status__cancel">취소</div>
                     </div>
                     <div class="request__card__row1__items">
                         <div class="row1__request-number">#${request.id}</div>
@@ -56,7 +56,7 @@ function getRequestList(event, status, page, page_size) {
                 </div>
                 <div class="request__card__row5"><span>요청자명</span> <span>${request.created_by_name}</span></div>
                 <div class="request__card__row6"><span>차대번호</span> <span>${request.vehicle_id ? request.vehicle_id : '-'}</span></div>
-                <div class="request__card__row7"><div>button event</div></div>
+                <div class="request__card__row7"><div>삭제</div></div>
             </div>
                 `);
             });
