@@ -1,0 +1,48 @@
+<!-- header -->
+<style>
+    .root__header {
+        position: fixed;
+        width: calc(100% - 260px);
+        margin-left: 260px;
+        height: 80px;
+        background: #f7f7f7;
+        padding: 20px 0px;
+        display: flex;
+        justify-content: flex-end;
+        font-size: 16px;
+        color: #000000;
+    }
+
+    .header__item__wrap {
+        display: flex;
+        justify-content: center;
+        margin-right: 40px;
+    }
+    .header__item {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin-right: 30px;
+        line-height: 21px;
+    }
+</style>
+<script defer type="module" src="/common/js/header.js"></script>
+
+<header class="root__header">
+    <div class="header__content">
+        <div class="header__item__wrap">
+            <div class="header__item">
+                <img src="/imgs/icon_noti.png"/>
+                <span>공지사항</span> 
+            </div>
+            <div class="header__item">
+                <img src="/imgs/btn_setting.png"/>
+                <span>설정</span> 
+            </div>
+            <div id='logout' class="header__item">
+                <img src="/imgs/btn-logout.png"/>
+                <span>로그아웃</span> 
+            </div>
+        </div>
+    </div>
+</header>

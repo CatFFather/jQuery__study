@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- script, css -->
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Noto+Sans+KR:300,400,700|Roboto:300,400,700&amp;subset=korean" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script defer>
+    $(() => {
+        $('#header').load('/common/html/header.html');
+        $('#leftNav').load('/common/html/leftNav.html');
+    });
+    </script>
+    <script defer type="module" src="/script/request.js"></script>
+    <link rel="stylesheet" type="text/css" href="/common/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/request.css">
+</head>
+<body>
+    <!-- 최상단 헤더 -->
+    <div id="header"></div>
+    
+    <!-- 왼쪽 메뉴 -->
+    <div id="leftNav"></div>
+
+
+    <!-- 메인 컨텐츠 -->
+    <main>
+        <section class="request">
+            <h1 class="request__title">부품요청</h1>
+            <article class="request__article">
+                <div class="request__row1">
+                    <div class="input__wrap">
+                        <label class="input__label">사고차 번호</label>
+                        <input class="input__normal" type="text" placeholder="예)123다1234" id='car_number'>
+                    </div>
+                    <div class="input__wrap">
+                        <label class="input__label">차종</label>
+                        <input class="input__normal" type="text" placeholder="예) BMW 520d, BENZ E-Class" id='car_model'>
+                    </div>   
+                </div>
+                <div class="request__row2">
+                    <div class="input__wrap">
+                        <label class="input__label">보험사</label>
+                        <select class="select__wrap" id='insurance'>
+                            <option value="선택">선택</option>
+                            <option value=2>DB</option>
+                        </select>
+                    </div>
+                    <div class="input__wrap">
+                        <label class="input__label">접수번호</label>
+                        <input class="input__normal" type="text" placeholder="'-'를 제외한 숫자만 입력" id='filing_number'>
+                    </div>   
+                </div>
+                <div class="request__row3">
+                    <div class="input__wrap">
+                        <label class="input__label">사고차량 입고일자</label>
+                        <input class="input__normal" type="date" id='warehousing'>
+                    </div>
+                </div>
+                <div class="request__row4">
+                    <div class="input__wrap">
+                        <label class="input__label">업체 선택 방식</label>
+                        <div class="button__wrap">
+                            <button class="button__normal" id="autoMatching">자동 매칭</button>
+                            <button class="button__normal button__normal__toggle" id='selectMatching'>직접 선택</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="request__row5">
+                    <div class="input__wrap">
+                        <label class="input__label">차대번호 사진</label>
+                        <input type="file" hidden id="vehicle_id_img">
+                        <button class="button__normal button__white">
+                            <label class="button__label" for="vehicle_id_img" >
+                                <img src="/imgs/icon_upload.png"/>차대번호 사진 등록
+                            </label>
+                        </button>
+                    </div>
+                </div>
+                <div class="request__row6">
+                    * 요청 시 차대번호 및 사고 부위 사진을 함께 보내면 빠르고 정확하게 진행될 수 있습니다.
+                </div>
+                <div class="request__row7">
+                    <span class="car__pictures__count">0</span> / 20
+                </div>
+                <div class="request__row8">
+                    <div class="car__pictures__wrap">
+                        <div class="car__pictures__input">
+                            <input type="file" multiple hidden id="pictures">
+                            <button class="button__normal button__white">
+                                <label class="button__label" for="pictures" >
+                                    <img src="/imgs/btn_pic.png"/>차량사진
+                                </label>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="request__row9">
+                    <button class="button__normal">
+                        부품사 매칭 요청
+                    </button>
+                </div>
+
+            </article>
+        </section>
+    </main>
+    
+
+
+
+</body>
+</html>

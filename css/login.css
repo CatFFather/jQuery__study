@@ -1,0 +1,36 @@
+main {
+    height: 100%;
+    margin: 0px auto;
+    padding: 20px;
+    max-width: 760px;
+    background: #fff;
+}
+.logo__wrap {
+    margin-top: 50px;
+    text-align: center;
+    margin-bottom: 90px;
+}
+.logo__item {
+    width: 280px;
+    height: 75px;
+}
+.search__wrap {
+    margin-top: 20px;
+    font-size: 12px;
+    line-height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.search__wrap span {
+    cursor: pointer;
+}
+
+.dot {
+    cursor: default !important;
+    margin: 0px 10px;
+    width: 4px;
+    height: 4px;
+    background: #000000;
+    border-radius: 50%;
+}

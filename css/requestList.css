@@ -1,0 +1,91 @@
+.request {
+    padding: 80px 0px 0px 260px;
+    min-height: 100%;
+    background-color: #f7f7f7;
+}
+.request__list {
+    width: 100%;
+    min-height: calc(100% - 54px);
+    padding: 32px 17px;
+}
+.request__card {
+    width: 390px;
+    height: 227px;
+    margin: 6px;
+    display: inline-block;
+    padding: 15px;
+    position: relative;
+    border-radius: 8px;
+    color: rgba(0, 0, 0, 0.87);
+    background-color: #fff;
+    overflow: hidden;
+    flex-direction: column;
+}
+.request__card__row1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.request__card__row1__items {
+    display: flex;
+}
+.row1__car-number {
+    color: #000000;
+    font-size: 18px;
+    font-family: Montserrat;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.row1__request-number {
+    color: #000000;
+    font-size: 12px;
+    font-family: Montserrat;
+    line-height: 15px;
+    margin-right: 5px;
+}
+
+.row1__request-date {
+    color: #999999;
+    font-size: 12px;
+    font-family: Montserrat;
+    line-height: 15px;
+}
+.request__card__row2 {
+    margin-top: 10px;
+}
+.request__card__row3 {
+    color: #999;
+    font-size: 12px;
+    margin-top: 10px;
+    font-family: Montserrat;
+}
+
+.request__card__row4 {
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+.request__card__row4 img {
+    margin: 0px 5px;
+}
+.request__card__row5,
+.request__card__row6 {
+    font-size: 12px;
+}
+.request__card__row5 span:nth-child(1),
+.request__card__row6 span:nth-child(1) {
+    color: #999;
+    margin-right: 10px;
+}
+.request__card__row7 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 42px;
+    margin: 0px -15px;
+    margin-top: 10px;
+    border-top: 1px solid #e5e5e5;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+}

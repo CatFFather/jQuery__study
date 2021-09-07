@@ -1,0 +1,119 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+body {
+    width: 100%;
+    height: 100%;
+    font-family: Noto Sans KR;
+    background-color: #ffffff;
+}
+a {
+    text-decoration: 'none';
+}
+ul {
+    list-style: none;
+}
+
+/* input */
+.input__wrap {
+    font-size: 12px;
+    line-height: 18px;
+    color: #000000;
+    margin-bottom: 30px;
+}
+.input__label {
+    display: block;
+    margin-bottom: 3px;
+}
+.input__normal {
+    font-family: Montserrat;
+    font-size: 16px;
+    line-height: 20px;
+    width: 100%;
+    border: none;
+    padding: 8px 0px;
+    border-bottom: 1px solid #e5e5e5;
+    transition: border-bottom 300ms ease-out;
+}
+.input__normal:focus {
+    outline: none;
+    border-bottom: 1px solid #000000;
+}
+.input__normal::placeholder {
+    font-size: 16px;
+    line-height: 24px;
+    color: #bbbbbb;
+}
+.input__file {
+}
+
+/* button */
+.button__normal {
+    font-family: Noto Sans CJK KR;
+    font-size: 16px;
+    line-height: 24px;
+    color: #ffffff;
+    background: #323b47;
+    border-radius: 8px;
+    width: 100%;
+    height: 56px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.button__normal__toggle {
+    background: #ffffff;
+    border: 1px solid #323b47;
+    color: #000000;
+}
+.button__white {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    color: #000000;
+}
+.button__label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+/* select */
+.select__wrap {
+    text-rendering: auto;
+    color: -internal-light-dark(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    appearance: auto;
+    box-sizing: border-box;
+    align-items: center;
+    white-space: pre;
+    -webkit-rtl-ordering: logical;
+    background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+    cursor: pointer;
+    margin: 0em;
+    font: 400 16px Arial;
+    border-radius: 0px;
+    border-image: initial;
+
+    border: none;
+    border-bottom: 1px solid #e5e5e5;
+    width: 100%;
+    /* height 는 각각 직접 지정 */
+}

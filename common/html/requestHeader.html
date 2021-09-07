@@ -1,0 +1,35 @@
+<!-- 요청 헤더 -->
+<style>
+.request__header {
+    margin: 0px 25px;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 16px;
+    line-height: 24px;
+    height: 54px;
+}
+.request__header__title__wrap {
+    display: flex;
+    height: 100%;
+}
+.request__header__title {
+    cursor: pointer;
+    margin-right: 40px;
+    line-height: 50px;
+}
+.title__border {
+    border: 2px solid #db3e07;
+    background: #db3e07;
+    border-radius: 10px;
+}
+</style>
+
+<script defer type="module" src="/common/js/requestHeader.js"></script>
+
+<header class="request__header">
+    <ul class="request__header__title__wrap">
+        <li class="request__header__title" id='REQUEST'>연결중 </li>
+        <li class="request__header__title" id='CONFIRM_ORDER'>주문확정</li>
+        <li class="request__header__title" id='COMPLETE_DELIVERY'>배송완료</li>
+        <li class="request__header__title" id='CANCELED'>취소</li>
+    </ul>
+</header>

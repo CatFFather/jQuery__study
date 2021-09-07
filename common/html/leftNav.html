@@ -1,0 +1,73 @@
+<!-- leftNavBar -->
+<style>
+    .root__leftNav {
+        position: fixed;
+        width: 260px;
+        background: #ffffff;
+        height: 100%;
+        border-right: 1px solid #e5e5e5;
+        padding: 40px;
+    }
+    .leftNav__img {
+        width: 200px;
+        height: 54px;
+        margin-bottom: 60px;
+    }
+    .leftNav__hello {
+        font-size: 18px;
+        line-height: 27px;
+        color: #999999;
+        margin-bottom: 5px;
+    }
+    .leftNav__agentName {
+        font-size: 22px;
+        line-height: 33px;
+        color: #000000;
+    }
+    .leftNav__divider {
+        margin: 30px 0px 60px 0px;
+        border: 1px solid #e5e5e5;
+    }
+    .leftNav__request {
+        display: flex;
+    }
+    .leftNav__request__list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .leftNav__request__img {
+        align-self: start;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    .leftNav__request__title {
+        font-weight: bold;
+        font-size: 20px !important;
+    }
+    .leftNav__request__list li {
+        cursor: pointer;
+        font-size: 16px;
+        line-height: 21px;
+        color: #000000;
+        margin-bottom: 20px;
+    }
+</style>
+<script defer type="module" src="/common/js/leftNav.js"></script>
+
+<nav class="root__leftNav">
+    <img class="leftNav__img" src="/imgs/logo_insurparts_service.png"/>
+    <div class="leftNav__hello">안녕하세요!</div>
+    <div class="leftNav__agentName">인천공업사</div>
+    <div class="leftNav__divider"></div>
+    <div class="leftNav__request">
+        <img class="leftNav__request__img" src="/imgs/icon_request_n.png"/>
+        <ul class="leftNav__request__list">
+            <li class="leftNav__request__title">부품요청</li>
+            <li id='REQUEST'>연결중</li>
+            <li id='CONFIRM_ORDER'>주문확정</li>
+            <li id='COMPLETE_DELIVERY'>배송완료</li>
+            <li id='CANCELED'>취소</li>
+        </ul>
+    </div>
+</nav>
