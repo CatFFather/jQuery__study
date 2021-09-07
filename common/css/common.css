@@ -32,6 +32,9 @@ ul {
     display: block;
     margin-bottom: 3px;
 }
+.input__label span {
+    position: relative;
+}
 .input__normal {
     font-family: Montserrat;
     font-size: 16px;
@@ -51,7 +54,14 @@ ul {
     line-height: 24px;
     color: #bbbbbb;
 }
-.input__file {
+.input__essential {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #db3e07;
+    right: -4px;
+    top: 0;
+    border-radius: 50%;
 }
 
 /* button */
