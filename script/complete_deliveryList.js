@@ -1,21 +1,20 @@
 import LocalStorageService from './service/LocalStorageService.js';
+import { commonPagination } from '../common/js/pagination.js';
 
 $(() => {
     console.log('complete_deliveryList');
     getRequestList();
-    $('.request__header__title').on('click', getRequestList);
 });
 
-function getRequestList(event, status, page, page_size) {
-    console.log(event);
+function getRequestList(current_page) {
     const myinfo = LocalStorageService.getUserInfo();
     const req_agent_id = myinfo.member_agent.agent.id;
 
     // const reqAgentId = auth.user.agentId;
     let tokenString = LocalStorageService.getAccessToken();
     const params = {
-        status: event && event.target.id ? event.target.id : 'COMPLETE_DELIVERY',
-        page: 1,
+        status: 'COMPLETE_DELIVERY',
+        page: current_page,
         page_size: 12,
         ordering: 'created',
     };
@@ -31,6 +30,7 @@ function getRequestList(event, status, page, page_size) {
         data: params,
         success: function (response) {
             const results = response.data.results;
+            const pagination = response.meta.page;
             console.log(results);
             const request__list = $('.request__list');
             request__list.empty();
@@ -60,6 +60,9 @@ function getRequestList(event, status, page, page_size) {
             </div>
                 `);
             });
+
+            // 페이징 처리
+            commonPagination(pagination, getRequestList);
         },
         error: function () {
             alert('목록 갱신 실패');

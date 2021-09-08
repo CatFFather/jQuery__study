@@ -6,12 +6,12 @@
 .request__list {
     width: 100%;
     min-height: calc(100% - 54px);
-    padding: 32px 17px;
+    padding: 32px 15px 20px 15px;
 }
 .request__card {
     width: 390px;
     height: 227px;
-    margin: 6px;
+    margin: 5px;
     display: inline-block;
     padding: 15px;
     position: relative;

@@ -7,6 +7,7 @@ $(() => {
     console.log(path);
 
     if (path.indexOf('requestList') !== -1) {
+        console.log('지금은 연결중 페이지');
         $('.request__header__title__wrap #REQUEST').append(`<div class="title__border"></div>`);
     } else if (path.indexOf('confirm_orderList') !== -1) {
         $('.request__header__title__wrap #CONFIRM_ORDER').append(`<div class="title__border"></div>`);

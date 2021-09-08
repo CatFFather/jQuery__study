@@ -127,3 +127,33 @@ ul {
     width: 100%;
     /* height 는 각각 직접 지정 */
 }
+
+/* 페이징 처리 */
+#pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pageBtn__ect,
+.pageBtn__normal {
+    font-size: 14px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3px;
+    background-color: initial;
+}
+.pageBtn__ect:hover,
+.pageBtn__normal:hover {
+    background: #a0a0a0;
+}
+.pageBtn__current_page {
+    color: #ffffff;
+    background: #323b47;
+}

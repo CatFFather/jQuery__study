@@ -1,21 +1,20 @@
 import LocalStorageService from './service/LocalStorageService.js';
+import { commonPagination } from '../common/js/pagination.js';
 
 $(() => {
     console.log('requestList');
     getRequestList();
-    $('.request__header__title').on('click', getRequestList);
 });
 
-function getRequestList(event, status, page, page_size) {
-    console.log(event);
-    const myinfo = LocalStorageService.getUserInfo();
-    const req_agent_id = myinfo.member_agent.agent.id;
+// 요청 리스트 불러오기
+function getRequestList(current_page) {
+    const myinfo = LocalStorageService.getUserInfo(); // 로컬에 저장해 둔 정보
+    const req_agent_id = myinfo.member_agent.agent.id; // agent id
 
-    // const reqAgentId = auth.user.agentId;
     let tokenString = LocalStorageService.getAccessToken();
     const params = {
-        status: event && event.target.id ? event.target.id : 'REQUEST',
-        page: 1,
+        status: 'REQUEST',
+        page: current_page,
         page_size: 12,
         ordering: 'created',
     };
@@ -31,10 +30,13 @@ function getRequestList(event, status, page, page_size) {
         data: params,
         success: function (response) {
             const results = response.data.results;
+            const pagination = response.meta.page;
             console.log(results);
+            console.log(pagination);
+
+            // 리스트에 데이터 추가
             const request__list = $('.request__list');
             request__list.empty();
-
             results.forEach((request) => {
                 request__list.append(`
             <div class="request__card">
@@ -60,6 +62,9 @@ function getRequestList(event, status, page, page_size) {
             </div>
                 `);
             });
+
+            // 페이징 처리
+            commonPagination(pagination, getRequestList);
         },
         error: function () {
             alert('목록 갱신 실패');
