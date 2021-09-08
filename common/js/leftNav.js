@@ -1,6 +1,7 @@
 import LocalStorageService from '../../script/service/LocalStorageService.js';
 
 $(() => {
+    $('.leftNav__img').on('click', goToList);
     $('.leftNav__request__list li').on('click', goToList);
 
     const path = $(location).attr('pathname');
@@ -20,6 +21,9 @@ $(() => {
 
 function goToList(event) {
     console.log(event);
+    if (event.target.className == 'leftNav__img') {
+        location.href = 'requestList.html';
+    }
     if (event.target.className == 'leftNav__request__title') {
         location.href = 'request.html';
     }

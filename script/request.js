@@ -174,8 +174,8 @@ async function partsRequest() {
 
     // 차대번호 사진 있는지 확인
     if (vehicle_id_img.length > 0) {
-        const uploadResult = await imgUpload(vehicle_id_img[0], 'VEHICLE');
         try {
+            const uploadResult = await imgUpload(vehicle_id_img[0], 'VEHICLE');
             vehicle_id_imgURL = uploadResult.data.files;
             console.log(vehicle_id_imgURL);
         } catch (e) {
@@ -185,8 +185,8 @@ async function partsRequest() {
     // 차량사진 있는지 확인
     if (pictures.length > 0) {
         for (const picture of pictures) {
-            const uploadResult = await imgUpload(picture, 'PARTS_REQ');
             try {
+                const uploadResult = await imgUpload(picture, 'PARTS_REQ');
                 pictureURL.push(uploadResult.data.files[0]);
             } catch (e) {
                 console.log(e);
