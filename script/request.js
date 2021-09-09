@@ -4,6 +4,9 @@ const tokenString = LocalStorageService.getAccessToken(); // 토큰
 let agent_parts = null; // 부품업체 아이디
 
 $(() => {
+    // 사고차량 입고일자 오늘 날짜로 default 값으로 지정
+    document.getElementById('warehousing').valueAsDate = new Date();
+
     const autoMatching = $('#autoMatching');
     const selectMatching = $('#selectMatching');
     // 1. 매칭 토글 버튼
