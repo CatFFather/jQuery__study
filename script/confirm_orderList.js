@@ -1,6 +1,7 @@
 import LocalStorageService from './service/LocalStorageService.js';
 import { commonPagination } from '../common/js/pagination.js';
 import { formatDate } from './util.js';
+import { getRefreshToken } from './service/member.js';
 
 $(() => {
     getConfirm_orderList();
@@ -66,8 +67,12 @@ function getConfirm_orderList(current_page) {
             // 페이징 처리
             commonPagination(pagination, getConfirm_orderList);
         },
-        error: function () {
-            alert('목록 갱신 실패');
+        error: function (error) {
+            let refreshToken = LocalStorageService.getRefreshToken();
+            if (error.status === 401 && error.responseJSON.meta.systemCode === 'token_not_valid' && refreshToken) {
+                console.log('토큰 만료');
+                getRefreshToken(getConfirm_orderList);
+            }
         },
     });
 }

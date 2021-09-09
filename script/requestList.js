@@ -1,6 +1,7 @@
 import LocalStorageService from './service/LocalStorageService.js'; // 로컬 서비스
 import { commonPagination } from '../common/js/pagination.js'; // 페이징 처리
-import { formatDate } from './util.js';
+import { formatDate } from './util.js'; // 날짜 포멧
+import { getRefreshToken } from './service/member.js'; // 토큰 재갱신
 
 $(() => {
     getRequestList();
@@ -66,8 +67,12 @@ function getRequestList(current_page) {
             // 페이징 처리
             commonPagination(pagination, getRequestList);
         },
-        error: function () {
-            alert('목록 갱신 실패');
+        error: function (error) {
+            let refreshToken = LocalStorageService.getRefreshToken();
+            if (error.status === 401 && error.responseJSON.meta.systemCode === 'token_not_valid' && refreshToken) {
+                console.log('토큰 만료');
+                getRefreshToken(getRequestList);
+            }
         },
     });
 }

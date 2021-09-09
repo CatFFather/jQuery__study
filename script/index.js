@@ -59,7 +59,6 @@ function login() {
                 console.log(results);
                 LocalStorageService.setUserInfo(results);
                 location.href = 'pages/requestList.html';
-                alert('로그인 성공');
             },
             error: function () {
                 alert('로그인 실패');
