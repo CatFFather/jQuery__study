@@ -1,7 +1,8 @@
 $(() => {
     $('.request__header__title').on('click', goToList);
-    const path = $(location).attr('pathname');
 
+    // 각각 메뉴 pathname 을 이용하여 색칠해주기
+    const path = $(location).attr('pathname');
     if (path.indexOf('requestList') !== -1) {
         $('.request__header__title__wrap #REQUEST').append(`<div class="title__border"></div>`);
     } else if (path.indexOf('confirm_orderList') !== -1) {
@@ -13,6 +14,7 @@ $(() => {
     }
 });
 
+// 각각 필터 선택 시 해당 페이지 이동
 function goToList(event) {
     console.log(event);
     if (event.target.id == 'REQUEST') {
