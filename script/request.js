@@ -1,18 +1,33 @@
 import LocalStorageService from './service/LocalStorageService.js';
 const tokenString = LocalStorageService.getAccessToken(); // 토큰
 
+let agent_parts = null; // 부품업체 아이디
+
 $(() => {
     const autoMatching = $('#autoMatching');
     const selectMatching = $('#selectMatching');
     // 1. 매칭 토글 버튼
+    const request__row4 = $('.request__row4');
     $(autoMatching).on('click', () => {
         autoMatching.removeClass('button__normal__toggle');
         selectMatching.addClass('button__normal__toggle');
+        $('#agent_parts__wrap').remove();
+        agent_parts = null;
     });
     $(selectMatching).on('click', () => {
         autoMatching.addClass('button__normal__toggle');
         selectMatching.removeClass('button__normal__toggle');
+        $('#agent_parts__wrap').remove();
+        agent_parts = null;
+        // 업체명 검색 autocomplete 추가
+        request__row4.append(`
+        <div class="input__wrap" id="agent_parts__wrap">
+            <input class="input__normal color__red" type="text" placeholder="업체명을 검색해주세요." id='agent_parts'>
+        </div>
+        `);
+        $('#agent_parts').on('keyup', getAgentPartsAutocomplete);
     });
+
     // 2. 보험사 기준정보 받아오기
     getInsuranceList();
 
@@ -27,6 +42,62 @@ $(() => {
     // 5. 매칭 버튼 클릭 -->부품 요청 함수 호출
     $('.request__row9').on('click', partsRequest);
 });
+
+// 1. 직접선택 시 Autocomplete
+function getAgentPartsAutocomplete(params) {
+    const keyword = $('#agent_parts').val();
+    if (!keyword) return;
+    const filter = {
+        keyword: keyword,
+        activate: 'ACTIVE',
+    };
+    $.ajax({
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'JWT ' + tokenString,
+        },
+        type: 'get',
+        url: `http://app1.in.delphicom.net:9000/api/agent/parts/autocomplete`,
+        dataType: 'json',
+        data: filter,
+        success: function (response) {
+            const results = response.data;
+            if (results.length > 0) {
+                $('.autocomplete__wrap').remove();
+                $('#agent_parts__wrap').append(`<div class="autocomplete__wrap"></div>`);
+                results.forEach((result) => {
+                    $('.autocomplete__wrap').append(`
+                    <div class="autocomplete__item">
+                        <span class="autocomplete__name" data-name=${result.name} data-id=${result.id}>
+                            ${keywordColor(keyword, result)}
+                        </span>
+                        <span class="autocomplete__address">${result.agent_parts.address}</span>
+                    </div>`);
+                });
+                $('.autocomplete__name').on('click', (e) => {
+                    console.log(e);
+                    $('#agent_parts').val(e.target.dataset.name);
+                    agent_parts = e.target.dataset.id;
+                    console.log(agent_parts);
+                    $('.autocomplete__wrap').remove();
+                });
+            } else {
+                $('.autocomplete__wrap').remove();
+            }
+        },
+        error: function (e) {
+            $('.autocomplete__wrap').remove();
+        },
+    });
+}
+// autocomplete keyword 색 변경
+function keywordColor(keyword, agentInfo) {
+    const newKeyword = agentInfo.name.replaceAll(
+        keyword,
+        `<span class="autocomplete__item color__red" data-name=${agentInfo.name} data-id=${agentInfo.id}>${keyword}</span>`
+    );
+    return newKeyword;
+}
 
 // 2. 보험사 기준정보 받아오기
 function getInsuranceList() {
@@ -208,6 +279,7 @@ async function partsRequest() {
     // Date 타입 param에 맞추기 (시간 필요)
     const newWarehousing = new Date(warehousing);
     const params = {
+        agent_parts: agent_parts ? { id: agent_parts } : null,
         car_number: car_number,
         car_model: car_model,
         insurance: insurance,

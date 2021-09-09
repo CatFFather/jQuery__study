@@ -1,13 +1,8 @@
-import LocalStorageService from '../../script/service/LocalStorageService.js';
-
 $(() => {
-    console.log('요청페이지 헤더');
     $('.request__header__title').on('click', goToList);
     const path = $(location).attr('pathname');
-    console.log(path);
 
     if (path.indexOf('requestList') !== -1) {
-        console.log('지금은 연결중 페이지');
         $('.request__header__title__wrap #REQUEST').append(`<div class="title__border"></div>`);
     } else if (path.indexOf('confirm_orderList') !== -1) {
         $('.request__header__title__wrap #CONFIRM_ORDER').append(`<div class="title__border"></div>`);
