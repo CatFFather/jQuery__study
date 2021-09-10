@@ -1,6 +1,6 @@
 import LocalStorageService from './service/LocalStorageService.js'; // 로컬 서비스
 import { commonPagination } from '../common/js/pagination.js'; // 페이징 처리
-import { cancelModal } from '../common/js/modal.js'; // 모달창
+import { cancelModal } from '../common/js/modal.js'; // 요청 취소 모달창
 import { formatDate } from './util.js'; // 날짜 포멧
 import { getRefreshToken } from './service/member.js'; // 토큰 재갱신
 

@@ -213,23 +213,4 @@ ul {
     width: 25px;
     height: 25px;
     margin-right: 7px;
-    /* background: #db3e07; */
 }
-/* input[type='radio'] {
-    -webkit-appearance: none;
-    width: 25px;
-    height: 25px;
-    border: 1px solid darkgray;
-    border-radius: 50%;
-    outline: none;
-    background: #db3e07;
-} */
-/* input[type='radio']:checked {
-    -webkit-appearance: none;
-    width: 25px;
-    height: 25px;
-    padding: 8px;
-    border-radius: 50%;
-    border: solid #db3e07 1px;
-    background: #db3e07;
-} */
