@@ -105,6 +105,9 @@
     width: 1px;
     height: 30px;
 }
+.request__cancel {
+    cursor: pointer;
+}
 
 /* 상태값 */
 .status {

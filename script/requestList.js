@@ -1,5 +1,6 @@
 import LocalStorageService from './service/LocalStorageService.js'; // 로컬 서비스
 import { commonPagination } from '../common/js/pagination.js'; // 페이징 처리
+import { cancelModal } from '../common/js/modal.js'; // 모달창
 import { formatDate } from './util.js'; // 날짜 포멧
 import { getRefreshToken } from './service/member.js'; // 토큰 재갱신
 
@@ -59,13 +60,24 @@ function getRequestList(current_page) {
                         </div>
                         <div class="request__card__row5"><span>요청자명</span> <span>${request.created_by_name}</span></div>
                         <div class="request__card__row6"><span>차대번호</span> <span>${request.vehicle_id ? request.vehicle_id : '-'}</span></div>
-                        <div class="request__card__row7"><div>요청취소</div></div>
+                        <div class="request__card__row7">
+                            <div class='request__cancel' data-match_id="${request.parts_brok_matches[0].id}">요청취소</div>
+                        </div>
                     </div>
                 `);
             });
 
             // 페이징 처리
             commonPagination(pagination, getRequestList);
+
+            // 요청 취소 이벤트 부여 (modal 호출)
+            $('.request__cancel').on('click', (e) => {
+                const props = {
+                    match_id: e.currentTarget.dataset.match_id,
+                    getList: getRequestList,
+                };
+                cancelModal(props);
+            });
         },
         error: function (error) {
             let refreshToken = LocalStorageService.getRefreshToken();
