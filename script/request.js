@@ -133,10 +133,10 @@ function setVehicleImg() {
 function setPictures() {
     const pictures = $('#pictures');
     carImgFiles = [...pictures[0].files];
+    console.log(carImgFiles);
     const car__pictures__wrap = $('.car__pictures__wrap');
     const request__row7 = $('.request__row7');
-    request__row7.empty();
-    request__row7.append(`<span class="car__pictures__count">${pictures[0].files.length}</span> / 20`);
+    request__row7.html(`<span class="car__pictures__count">${carImgFiles.length}</span> / 20`);
 
     $('.car__pictures__preview__img__wrap').remove();
 
@@ -163,6 +163,7 @@ function setPictures() {
                 });
             }
         });
+        request__row7.html(`<span class="car__pictures__count">${carImgFiles.length}</span> / 20`);
     });
 }
 // 5. 이미지 업로드

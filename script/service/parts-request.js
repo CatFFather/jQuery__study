@@ -5,8 +5,8 @@ const refreshToken = LocalStorageService.getRefreshToken();
 const myinfo = LocalStorageService.getUserInfo(); // 로컬에 저장해 둔 정보
 const req_agent_id = myinfo.member_agent.agent.id; // agent id
 
+// 부품 요청
 function partsRequestService(params) {
-    // 요청
     $.ajax({
         headers: {
             'Content-Type': 'application/json',
@@ -31,7 +31,6 @@ function partsRequestService(params) {
 /**
  *
  * @param {*} params // 요청할 파라미터
- * @param {*} getList  // 토큰 재갱신 후 부를 함수
  * @returns
  */
 
@@ -59,6 +58,6 @@ function getRequestList(params) {
 }
 
 export {
-    partsRequestService, //부품 요청
+    partsRequestService, // 부품 요청
     getRequestList, // 요청 리스트 불러오기
 };
