@@ -1,11 +1,11 @@
 import LocalStorageService from './LocalStorageService.js';
+const refreshToken = LocalStorageService.getRefreshToken();
 
 /**
  *
  * @param {*} getPage // 다시 갱신할 api
  */
 function getRefreshToken(getPage) {
-    let refreshToken = LocalStorageService.getRefreshToken();
     $.ajax({
         url: `http://app1.in.delphicom.net:9000/api/member/token/refresh`,
         data: { refresh: refreshToken },

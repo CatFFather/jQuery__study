@@ -1,24 +1,21 @@
 import LocalStorageService from './LocalStorageService.js'; // 로컬 서비스
-
 const tokenString = LocalStorageService.getAccessToken();
+const myinfo = LocalStorageService.getUserInfo(); // 로컬에 저장해 둔 정보
+const req_agent_id = myinfo.member_agent.agent.id; // agent id
 
-function requestCancel(params) {
-    console.log('params', params);
+// 요청 리스트 불러오기
+function getRequestList(params) {
     return $.ajax({
         headers: {
+            'Content-Type': 'application/json',
             Authorization: 'JWT ' + tokenString,
         },
-        type: 'POST',
-        url: `http://app1.in.delphicom.net:9000/api/match/${params.match_id}/cancel`,
+        type: 'get',
+        url: `http://app1.in.delphicom.net:9000/api/parts-request/carcenter/${req_agent_id}`,
         dataType: 'json',
-        data: {
-            match_id: params.match_id,
-            reason: params.reason,
-        },
+        data: params,
         success: function (response) {
-            alert('요청이 취소 되었습니다.');
-            // 모달 닫기
-            $('.modal').remove();
+            return response;
         },
         error: function (error) {
             let refreshToken = LocalStorageService.getRefreshToken();
@@ -30,6 +27,4 @@ function requestCancel(params) {
     });
 }
 
-export {
-    requestCancel, // 요청 취소 api
-};
+export { getRequestList };
