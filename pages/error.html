@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- script, css -->
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Noto+Sans+KR:300,400,700|Roboto:300,400,700&amp;subset=korean" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script defer>
+    $(() => {
+        $('#header').load('/common/html/header.html');
+        $('#leftNav').load('/common/html/leftNav.html');
+    });
+    </script>
+    <script defer type="module" src="/script/init.js"></script>
+    <link rel="stylesheet" type="text/css" href="/common/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/error.css">
+</head>
+<body>
+    <!-- 최상단 헤더 -->
+    <div id="header"></div>
+    
+    <!-- 왼쪽 메뉴 -->
+    <div id="leftNav"></div>
+
+
+    <!-- 메인 컨텐츠 -->
+    <main class="error">
+       <div class="error__wrap">
+            <h3>
+               <span>일시적인 오류</span>입니다. <br/>
+                잠시 후 다시 시도해 주세요.
+            </h3>
+
+       <button style="width:240px " class="button__normal"  onclick="history.back()">이전 페이지</button>
+       </div>
+    </main>
+    
+
+
+
+</body>
+</html>

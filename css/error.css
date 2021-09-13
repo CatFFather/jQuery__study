@@ -1,0 +1,22 @@
+/* 에러 페이지 (토큰 발급) */
+.error {
+    padding: 80px 0px 0px 260px;
+    min-height: 100%;
+    width: 100%;
+}
+.error__wrap {
+    text-align: center;
+    font-weight: bold;
+    line-height: 44px;
+    padding-top: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.error__wrap span {
+    color: #db3e07;
+}
+.error__wrap h3 {
+    font-size: 30px;
+    margin-bottom: 80px;
+}
