@@ -1,15 +1,23 @@
 import LocalStorageService from './service/LocalStorageService.js';
-const tokenString = LocalStorageService.getAccessToken(); // 토큰
 
+import { getInsuranceList } from './service/standard.js';
+import { getAgentPartsAutocomplete } from './service/agent.js';
+import { partsRequestService } from './service/parts-request.js';
+import { fileUpload } from './service/file.js';
+
+let vehicle_id_imgFile = []; // 사진 업로드 시 파라미터로 넘길 차대번호 사진
+let carImgFiles = []; // 사진 업로드 시 파라미터로 넘길 차량 사진
+let vehicle_id_imgURL = null; // 차대번호 업로드 후 URL
+let pictureURL = []; // 차량사진 업로드 후 URL
 let agent_parts = null; // 부품업체 아이디
 
 $(() => {
     // 사고차량 입고일자 오늘 날짜로 default 값으로 지정
     document.getElementById('warehousing').valueAsDate = new Date();
 
-    const autoMatching = $('#autoMatching');
-    const selectMatching = $('#selectMatching');
     // 1. 매칭 토글 버튼
+    const autoMatching = $('#autoMatching'); // 업체 선택 방식 버튼 element (자동매칭 버튼)
+    const selectMatching = $('#selectMatching'); // 업체 선택 방식 버튼 element (직접선택 버튼)
     const request__row4 = $('.request__row4');
     $(autoMatching).on('click', () => {
         autoMatching.removeClass('button__normal__toggle');
@@ -28,11 +36,19 @@ $(() => {
             <input class="input__normal color__red" type="text" placeholder="업체명을 검색해주세요." id='agent_parts'>
         </div>
         `);
-        $('#agent_parts').on('keyup', getAgentPartsAutocomplete);
+        $('#agent_parts').on('keyup', agentPartsAutocomplete);
     });
 
     // 2. 보험사 기준정보 받아오기
-    getInsuranceList();
+    getInsuranceList().then((response) => {
+        const select__wrap = $('.select__wrap');
+        const results = response.data;
+        results.forEach((result) => {
+            select__wrap.append(`
+            <option value=${result.id}>${result.name}</option>
+            `);
+        });
+    });
 
     // 3. 차대번호 사진 등록
     const vehicle_id_img = $('#vehicle_id_img');
@@ -47,53 +63,41 @@ $(() => {
 });
 
 // 1. 직접선택 시 Autocomplete
-function getAgentPartsAutocomplete(params) {
+function agentPartsAutocomplete() {
     const keyword = $('#agent_parts').val();
     if (!keyword) return;
     const filter = {
         keyword: keyword,
         activate: 'ACTIVE',
     };
-    $.ajax({
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'JWT ' + tokenString,
-        },
-        type: 'get',
-        url: `http://app1.in.delphicom.net:9000/api/agent/parts/autocomplete`,
-        dataType: 'json',
-        data: filter,
-        success: function (response) {
-            const results = response.data;
-            if (results.length > 0) {
-                $('.autocomplete__wrap').remove();
-                $('#agent_parts__wrap').append(`<div class="autocomplete__wrap"></div>`);
-                results.forEach((result) => {
-                    $('.autocomplete__wrap').append(`
-                    <div class="autocomplete__item">
-                        <span class="autocomplete__name" data-name=${result.name} data-id=${result.id}>
-                            ${keywordColor(keyword, result)}
-                        </span>
-                        <span class="autocomplete__address">${result.agent_parts.address}</span>
-                    </div>`);
-                });
-                $('.autocomplete__name').on('click', (e) => {
-                    console.log(e);
-                    $('#agent_parts').val(e.target.dataset.name);
-                    agent_parts = e.target.dataset.id;
-                    console.log(agent_parts);
-                    $('.autocomplete__wrap').remove();
-                });
-            } else {
-                $('.autocomplete__wrap').remove();
-            }
-        },
-        error: function (e) {
+    getAgentPartsAutocomplete(filter).then((response) => {
+        const results = response.data;
+        if (results.length > 0) {
             $('.autocomplete__wrap').remove();
-        },
+            $('#agent_parts__wrap').append(`<div class="autocomplete__wrap"></div>`);
+            results.forEach((result) => {
+                $('.autocomplete__wrap').append(`
+                <div class="autocomplete__item">
+                    <span class="autocomplete__name" data-name=${result.name} data-id=${result.id}>
+                        ${keywordColor(keyword, result)}
+                    </span>
+                    <span class="autocomplete__address">${result.agent_parts.address}</span>
+                </div>`);
+            });
+            $('.autocomplete__name').on('click', (e) => {
+                console.log(e);
+                $('#agent_parts').val(e.target.dataset.name);
+                agent_parts = e.target.dataset.id;
+                console.log(agent_parts);
+                $('.autocomplete__wrap').remove();
+            });
+        }
+        // else {
+        //     // $('.autocomplete__wrap').remove();
+        // }
     });
 }
-// autocomplete keyword 색 변경
+// 2. autocomplete keyword 색 변경
 function keywordColor(keyword, agentInfo) {
     const newKeyword = agentInfo.name.replaceAll(
         keyword,
@@ -102,36 +106,13 @@ function keywordColor(keyword, agentInfo) {
     return newKeyword;
 }
 
-// 2. 보험사 기준정보 받아오기
-function getInsuranceList() {
-    const select__wrap = $('.select__wrap');
-    $.ajax({
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'JWT ' + tokenString,
-        },
-        type: 'get',
-        url: `http://app1.in.delphicom.net:9000/api/standard/insurance-company?able=true`,
-        dataType: 'json',
-        success: function (response) {
-            const results = response.data;
-            results.forEach((result) => {
-                select__wrap.append(`
-                <option value=${result.id}>${result.name}</option>
-                `);
-            });
-        },
-        error: function () {
-            alert('보험사 기준정보 get 실패');
-        },
-    });
-}
-
 // 3. 차대번호 사진 등록
 function setVehicleImg() {
     const vehicle_id_img = $('#vehicle_id_img');
+    console.log(vehicle_id_img[0].files[0]);
+    vehicle_id_imgFile.push(vehicle_id_img[0].files[0]);
     const request__row5 = $('.request__row5');
-    const imgUrl = window.URL.createObjectURL(vehicle_id_img[0].files[0]);
+    const imgUrl = window.URL.createObjectURL(vehicle_id_imgFile[0]);
     $('.request__preview__img__root').remove();
     request__row5.append(`
     <div class="request__preview__img__root">
@@ -143,15 +124,15 @@ function setVehicleImg() {
     // 삭제 버튼 기능
     const img__delete__btn = $('.img__delete__btn');
     img__delete__btn.on('click', () => {
-        console.log(img__delete__btn);
         $('.request__preview__img__root').remove();
+        vehicle_id_imgFile = [];
     });
 }
 
 // 4. 차량사진 등록
 function setPictures() {
     const pictures = $('#pictures');
-    const imgFiles = [...pictures[0].files];
+    carImgFiles = [...pictures[0].files];
     const car__pictures__wrap = $('.car__pictures__wrap');
     const request__row7 = $('.request__row7');
     request__row7.empty();
@@ -159,7 +140,7 @@ function setPictures() {
 
     $('.car__pictures__preview__img__wrap').remove();
 
-    imgFiles.forEach((imgFile, index) => {
+    carImgFiles.forEach((imgFile, index) => {
         const imgUrl = window.URL.createObjectURL(imgFile);
         car__pictures__wrap.append(`
             <div class="car__pictures__preview__img__wrap" data-key=${imgFile.lastModified}>
@@ -169,33 +150,19 @@ function setPictures() {
         `);
     });
 
-    // 삭제 버튼 기능(보완 필요--> files 값이 안바뀜 )
+    // 삭제 버튼 기능
     const car__pictures__img__delete__btn = $('.car__pictures__img__delete__btn');
 
     car__pictures__img__delete__btn.on('click', (event) => {
         const dataset__key = event.target.dataset.key;
-        [...$('.car__pictures__preview__img__wrap')].forEach((wrap) => {
+        [...$('.car__pictures__preview__img__wrap')].forEach((wrap, index) => {
             if (dataset__key == wrap.dataset.key) {
-                console.log(wrap);
                 wrap.remove();
+                carImgFiles = carImgFiles.filter((imgFile) => {
+                    return imgFile != carImgFiles[index];
+                });
             }
         });
-        // console.log(dataset__key);
-        // console.log(pictures[0].files);
-        // const dataTranster = new DataTransfer();
-        // const files = Array.from(pictures[0].files);
-        // console.log(files);
-        // const filterImgFiles = imgFiles.filter((file) => {
-        //     return file.lastModified != dataset__key;
-        // });
-        // filterImgFiles.forEach((file) => {
-        //     console.log(file);
-        //     dataTranster.items.add(file);
-        // });
-        // console.log(dataTranster);
-
-        // pictures[0].files = dataTranster.files;
-        // console.log(pictures);
     });
 }
 // 5. 이미지 업로드
@@ -203,41 +170,19 @@ function imgUpload(imgs, type) {
     const formData = new FormData();
     formData.append('files', imgs);
     formData.append('files_type', type);
-    return $.ajax({
-        headers: {
-            Authorization: 'JWT ' + tokenString,
-        },
-        type: 'post',
-        url: `http://app1.in.delphicom.net:9000/api/files/upload`,
-        dataType: 'json',
-        data: formData,
-        contentType: false, // FormData 보낼 때 false로 보내줘야함
-        processData: false, // FormData 보낼 때 false로 보내줘야함
-        success: function (response) {
-            const result = response.data.files;
-            return result;
-        },
-        error: function () {
-            alert('사진 업로드 실패');
-        },
-    });
+    return fileUpload(formData);
 }
 
 // 6. 부품 요청
 async function partsRequest() {
     console.log('부품사 매칭 요청');
-    const car_number = $('#car_number').val();
-    const car_model = $('#car_model').val();
-    const insurance = $('#insurance').val();
-    const filing_number = $('#filing_number').val();
-    const warehousing = $('#warehousing').val();
-    let match_type = null;
-    const autoMatching = $('#autoMatching');
-    const selectMatching = $('#selectMatching');
-    const vehicle_id_img = $('#vehicle_id_img')[0].files;
-    const pictures = $('#pictures')[0].files;
-    let vehicle_id_imgURL = null; // 차대번호 업로드 후 URL
-    let pictureURL = []; // 차량사진 업로드 후 URL
+    const car_number = $('#car_number').val(); // 사고차 번호
+    const car_model = $('#car_model').val(); // 차종
+    const insurance = $('#insurance').val(); // 보험사
+    const filing_number = $('#filing_number').val(); // 접수번호
+    const warehousing = $('#warehousing').val(); // 사고차량 입고일자
+    let match_type = null; // 업체 선택 방식
+    const autoMatching = $('#autoMatching'); // 업체 선택 방식 버튼 element (자동매칭 버튼)
 
     // match_type 분기
     if (autoMatching.hasClass('button__normal__toggle') == true) {
@@ -247,9 +192,9 @@ async function partsRequest() {
     }
 
     // 차대번호 사진 있는지 확인
-    if (vehicle_id_img.length > 0) {
+    if (vehicle_id_imgFile.length > 0) {
         try {
-            const uploadResult = await imgUpload(vehicle_id_img[0], 'VEHICLE');
+            const uploadResult = await imgUpload(vehicle_id_imgFile[0], 'VEHICLE');
             vehicle_id_imgURL = uploadResult.data.files;
             console.log(vehicle_id_imgURL);
         } catch (e) {
@@ -257,8 +202,8 @@ async function partsRequest() {
         }
     }
     // 차량사진 있는지 확인
-    if (pictures.length > 0) {
-        for (const picture of pictures) {
+    if (carImgFiles.length > 0) {
+        for (const picture of carImgFiles) {
             try {
                 const uploadResult = await imgUpload(picture, 'PARTS_REQ');
                 pictureURL.push(uploadResult.data.files[0]);
@@ -266,7 +211,6 @@ async function partsRequest() {
                 console.log(e);
             }
         }
-        console.log(pictureURL);
     }
     // 차량사진 URL을 param 타입으로 만들어주기
     let newPictureURL = null;
@@ -275,7 +219,6 @@ async function partsRequest() {
             return { image: img };
         });
     }
-    console.log(newPictureURL);
 
     // 유저정보 가져오기
     let userInfo = LocalStorageService.getUserInfo();
@@ -294,24 +237,9 @@ async function partsRequest() {
         vehicle_id_img: vehicle_id_imgURL && vehicle_id_imgURL[0] && vehicle_id_imgURL[0],
         pictures: newPictureURL,
     };
-    // 요청
-    $.ajax({
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'JWT ' + tokenString,
-        },
-        type: 'post',
-        url: `http://app1.in.delphicom.net:9000/api/parts-request`,
-        dataType: 'json',
-        data: JSON.stringify(params),
-        success: function (response) {
-            const results = response.data.results;
-            console.log(results);
-            alert('매칭 성공');
-            location.href = 'requestList.html';
-        },
-        error: function () {
-            alert('매칭 요청 실패');
-        },
-    });
+    if (params.agent_parts == null) {
+        delete params.agent_parts;
+    }
+    // 부품 요청
+    partsRequestService(params);
 }
