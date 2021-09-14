@@ -1,9 +1,4 @@
-// SERVICE
-import DeviceService from '../../script/service/DeviceService.js';
-import LocalStorageService from '../../script/service/LocalStorageService.js';
-
 $(() => {
-    // $('#header').load('/common/html/header.html');
     $('#logout').on('click', logout);
 });
 

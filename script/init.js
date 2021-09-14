@@ -6,7 +6,7 @@ export default window.goToPath = (path) => {
     location.href = path;
 };
 
-// 모바일 판단
+// 모바일 판단 (나중에 웹뷰인지 웹인지 판단도 가능 )
 const isMobile = detectMobileDevice(window.navigator.userAgent);
 function detectMobileDevice(agent) {
     const mobileRegex = [/Android/i, /iPhone/i, /iPad/i, /iPod/i, /BlackBerry/i, /Windows Phone/i];
