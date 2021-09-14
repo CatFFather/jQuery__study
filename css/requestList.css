@@ -3,6 +3,7 @@
     min-height: 100%;
     background-color: #f7f7f7;
 }
+
 .request__list {
     width: 100%;
     min-height: calc(100% - 54px);
@@ -137,4 +138,13 @@
 .status__cancel {
     background: rgba(219, 62, 7, 0.1);
     color: #db3e07;
+}
+@media screen and (max-width: 760px) {
+    .request {
+        /* padding: 80px 0px 0px 0px; */
+        padding: 0;
+    }
+    .request__card {
+        width: 100%;
+    }
 }
