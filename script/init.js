@@ -38,4 +38,24 @@ $(() => {
     } else {
         console.log('current device is not mobile');
     }
+    // callActivity();
 });
+
+// 안드로이드 웹뷰 코드 테스트
+function callActivity() {
+    if (isMobile) {
+        // alert('isMobile', isMobile);
+        console.log('callActivity');
+        window.android.getAndroidCall();
+        console.log(window.android.getAndroidCall());
+        alert(window.android.getAndroidCall());
+    }
+    // console.log(window.android);
+    // if (window.android) {
+    //     console.info('android');
+    //     window.android.callSettingsActivity(number.value);
+    // } else {
+    //     console.info('web');
+    //     document.form.submit();
+    // }
+}
