@@ -28,12 +28,17 @@ function getList(current_page) {
 
         notices.forEach((notice) => {
             $('.notice__list__table').append(`
-                <tr>
+                <tr data-seq = ${notice.seq} >
                     <td align="center">${notice.seq}</td>
                     <td>${notice.subject}</td>
                     <td align="center">${formatDate(notice.created)}</td>
                 </tr>   
             `);
+        });
+        // tr 클릭시 seq값을 쿼리스트링에 넣어서 보내주기
+        $('.notice__list__table tr').on('click', (e) => {
+            const seq = e.currentTarget.dataset.seq;
+            if (seq) location.href = `noticeDetail.html?detail=${seq}`;
         });
 
         // 페이징 처리

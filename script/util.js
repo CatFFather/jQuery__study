@@ -9,4 +9,13 @@ function formatDate(date) {
     return [year, month, day].join('.');
 }
 
-export { formatDate };
+// 쿼리스트링 추출 함수
+function getUrlParams() {
+    const params = {};
+    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+        params[key] = value;
+    });
+    return params;
+}
+
+export { formatDate, getUrlParams };
